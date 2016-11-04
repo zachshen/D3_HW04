@@ -1,0 +1,185 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>zachshen</title>
+    <script src="https://d3js.org/d3.v3.js"></script>
+    <link rel="stylesheets" herf="stylesheet.css">
+    <style>
+        div {
+            font-size: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1><em>D3JS_HW04</em></h1>
+    <!--    FIR-->
+
+        <h1>
+     
+       <svg width="500" height="300"> </svg>
+       <script>
+        d3.json("invoice-taipei.json", function(dataSet) {
+            var svg = d3.select("svg");
+            var count = 0;
+            for (var i = 0; i < dataSet.length; i++) {
+                if (dataSet[i].date === "2016/8/1" && dataSet[i].cid === "A" && parseInt(dataSet[i].amount) > 1000000000) {
+                    d3.select("svg")
+                        .append("rect")
+                        .attr({
+                            x: 250,
+                            y: 10 + 16 * count,
+                            width: dataSet[i].amount / 100000000,
+                            height: 10,
+                            fill: "red"
+                        });
+
+                    d3.select("svg")
+                        .append("text")
+                        .attr({
+                            x: 0,
+                            y: 16+16 * count,
+                            "font-size": 12
+                        }).text(dataSet[i].industry);
+                    count++;
+                }
+
+            }
+        });
+
+        </script>
+        </h1>
+    <hr>
+    <!--        SEC-->
+    <h2>綁定資料改顏色</h2>
+    <div>
+
+        <script>
+            var arr = [85, 60, 99, 49, 77, 82];
+            bind(arr);
+            render();
+
+            function bind(data) {
+                var selection = d3.select("body")
+                    .selectAll("div")
+                    .data(data);
+                selection.enter().append("div");
+                selection.exit().remove();
+            }
+//function D<70 RED
+            function render() {
+                d3.selectAll("div").text(function (d, i) {
+                    return i + 1 + ":" + d;
+                })
+                d3.selectAll("div").style({
+                    color: function (d) {
+                        if (d < 70) {
+                            return "red";
+                        } else {
+                            return "black";
+                        }
+                    }
+                })
+            };
+        </script>
+    </div>
+
+    <hr>
+    <h2>動態圖表</h2>
+    <div>
+        <!--    THR-->
+        
+
+        
+    <script>
+        var h = 200;
+        var w = 1200;
+        var p = 50;
+        var arr = [45, 76, 96, 35, 88, 69];
+        svg(w, h, p);
+        bind(arr);
+        render(w, h, p);
+//        W
+        bind2(arr);
+        render2(w, h, p);
+
+        function svg(w, h, p) {
+            d3.select('body').append('svg').attr({
+                id:"svgz",
+                width: w,
+                height: h
+            })
+        }
+
+        function add() {
+            var num = random(20, 100);
+            arr.push(num);
+            bind(arr);
+            render(w, h, p);
+            bind2(arr); 
+            render2(w, h, p);
+        }
+
+        function bind(data) {
+            var selection = d3.select("#svgz").selectAll("rect").data(data);
+            selection.enter().append('rect');
+            selection.exit().remove();
+        }
+
+        function render(w, h, p) {
+            d3.select("#svgz")
+            .selectAll('rect').attr({
+                x: function (d, i) {
+                    return p + 45 * i;
+                },
+                y: function (d) {
+                    return h - p - d;
+                },
+                width: 40,
+                height: function (d) {
+                    return d;
+                },
+                fill: function (d) {
+                    if (d < 70) {
+                        return "red";}
+                        else {
+                        return "lightgreen";
+                    } 
+                }
+            })
+        }
+
+        function bind2(data) {
+            var selection = 
+        d3. select("#svgz").selectAll("text").data(data);
+            selection.enter().append("text");
+            selection.exit().remove();
+        }
+
+        function render2(w, h, p) {
+            d3.select("#svgz").selectAll("text").attr({
+                x: function (d, i) {
+                    return p + 45 * i+12;
+                },
+                y: function (d) {
+                    return h - p + 15;
+                },
+                
+                fill: "black"
+            }).text(function(d){
+                return d;
+            })
+        }
+        function random(n,m){
+            return Math.ceil(Math.random()*(m-n)+n);
+        }
+    </script>
+        
+
+    <div><input type="button" value="+" onclick="add()"></div>
+    </div>
+</body>
+
+</html>
