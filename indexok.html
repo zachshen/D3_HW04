@@ -5,9 +5,10 @@
     <meta charset="UTF-8">
     <title>zachshen</title>
     <script src="https://d3js.org/d3.v3.js"></script>
+    <link rel="stylesheets" herf="stylesheet.css">
     <style>
         div {
-            font-size: 7px;
+            font-size: 10px;
         }
     </style>
 </head>
@@ -15,8 +16,10 @@
 <body>
     <h1><em>D3JS_HW04</em></h1>
     <!--    FIR-->
-    <h1>
-       <svg width="400" height="200"> </svg>
+
+        <h1>
+     
+       <svg width="500" height="300"> </svg>
        <script>
         d3.json("invoice-taipei.json", function(dataSet) {
             var svg = d3.select("svg");
@@ -65,7 +68,7 @@
                 selection.enter().append("div");
                 selection.exit().remove();
             }
-
+//function D<70 RED
             function render() {
                 d3.selectAll("div").text(function (d, i) {
                     return i + 1 + ":" + d;
@@ -87,24 +90,23 @@
     <h2>動態圖表</h2>
     <div>
         <!--    THR-->
-        <div>
-            <input type="button" value="+" onclick="add()">
-        </div>
+        
 
-        <h2>
+        
     <script>
-        var h = 300;
-        var w = 700;
+        var h = 200;
+        var w = 1200;
         var p = 50;
         var arr = [45, 76, 96, 35, 88, 69];
         svg(w, h, p);
         bind(arr);
         render(w, h, p);
+//        W
         bind2(arr);
         render2(w, h, p);
 
         function svg(w, h, p) {
-            d3.select("body").append("svg").attr({
+            d3.select('body').append('svg').attr({
                 id:"svgz",
                 width: w,
                 height: h
@@ -116,19 +118,19 @@
             arr.push(num);
             bind(arr);
             render(w, h, p);
-            bind2(arr);
+            bind2(arr); 
             render2(w, h, p);
         }
 
         function bind(data) {
             var selection = d3.select("#svgz").selectAll("rect").data(data);
-            selection.enter().append("rect");
+            selection.enter().append('rect');
             selection.exit().remove();
         }
 
         function render(w, h, p) {
             d3.select("#svgz")
-            .selectAll("rect").attr({
+            .selectAll('rect').attr({
                 x: function (d, i) {
                     return p + 45 * i;
                 },
@@ -141,28 +143,30 @@
                 },
                 fill: function (d) {
                     if (d < 70) {
-                        return "red";
-                    } else {
-                        return "lighgreen";
-                    }
+                        return "red";}
+                        else {
+                        return "lightgreen";
+                    } 
                 }
             })
         }
 
         function bind2(data) {
-            var selection = d3. select("#svgz").selectAll("text").data(data);
+            var selection = 
+        d3. select("#svgz").selectAll("text").data(data);
             selection.enter().append("text");
             selection.exit().remove();
         }
 
         function render2(w, h, p) {
-            d3.selectAll("text").attr({
+            d3.select("#svgz").selectAll("text").attr({
                 x: function (d, i) {
-                    return 12 + p + 45 * i;
+                    return p + 45 * i+12;
                 },
                 y: function (d) {
                     return h - p + 15;
                 },
+                
                 fill: "black"
             }).text(function(d){
                 return d;
@@ -172,7 +176,9 @@
             return Math.ceil(Math.random()*(m-n)+n);
         }
     </script>
-    </h2>
+        
+
+    <div><input type="button" value="+" onclick="add()"></div>
     </div>
 </body>
 
